@@ -9,5 +9,6 @@ ReactDOM.render(
 		<Media 	
 			title="Qué es responsive design?" 
 			author="Carlos González" 
-			image="./images/covers/responsive.jpg" />, 
+			image="./images/covers/responsive.jpg"
+			type="video" />, 
 		app);
