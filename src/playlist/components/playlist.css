@@ -1,0 +1,7 @@
+.Playlist {
+	display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-height: 235px;
+    overflow: hidden;
+}
