@@ -16,11 +16,11 @@ class Media extends Component {
 		author: this.props.author,
 	}
 	handleClick = (event) => {
-		console.log(this.props.title);
+		/*console.log(this.props.title);
 
 		this.setState({
 			author: 'Jesus Escalante',
-		});
+		});*/
 	}
 	render() {
 		const styles = {
