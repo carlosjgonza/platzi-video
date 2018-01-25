@@ -8,8 +8,9 @@ import Controls from '../components/video-player-controls';
 import ProgressBar from '../components/progress-bar';
 import Spinner from '../components/spinner';
 import Volume from '../components/volume';
+import FullScreen from '../components/full-screen';
 
-import { formatTime } from '../../libs/utilities.js';
+import { formatTime, isFullScreen, exitFullScreen, requestFullScreen } from '../../libs/utilities.js';
 
 class VideoPlayer extends Component {
 	state = {
@@ -74,9 +75,21 @@ class VideoPlayer extends Component {
 
 		this.video.volume = (!this.state.mute) ? 0 : this.state.lastVolume;
 	}
+	handleFullScreenClick = event => {
+		if(!isFullScreen()) {
+			requestFullScreen(this.player);
+		} else {
+			exitFullScreen();
+		}
+	}
+	setRef = element => {
+		this.player = element;
+	}
 	render() {
 		return (
-			<VideoPlayerLayout>
+			<VideoPlayerLayout
+				setRef={this.setRef}
+			>
 				<Title
 					title="Este es un titulo chido!!"
 				/>
@@ -98,6 +111,9 @@ class VideoPlayer extends Component {
 						volume={this.state.volume}
 						handleVolumeChange={this.handleVolumeChange}
 						handleVolumeClick={this.handleVolumeClick}
+					/>
+					<FullScreen 
+						handleFullScreenClick={this.handleFullScreenClick}
 					/>
 				</Controls>
 				<Spinner 

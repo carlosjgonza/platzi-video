@@ -12,7 +12,7 @@ function Volume(props) {
       >
         <VolumeIcon
           color="white"
-          size={20}
+          size={25}
         />
       </div>
       <div className="Volume-range">
