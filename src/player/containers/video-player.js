@@ -6,6 +6,7 @@ import PlayPause from '../components/play-pause';
 import Timer from '../components/timer';
 import Controls from '../components/video-player-controls';
 import ProgressBar from '../components/progress-bar';
+import Spinner from '../components/spinner';
 
 import { formatTime } from '../../libs/utilities.js';
 
@@ -15,7 +16,8 @@ class VideoPlayer extends Component {
 		duration: 0,
 		durationFormatted: 0,
 		currentTime: 0,
-		currentTimeFormatted: 0
+		currentTimeFormatted: 0,
+		loading: false
 	}
 	togglePlay = (event) => {
 		this.setState({
@@ -43,18 +45,21 @@ class VideoPlayer extends Component {
 	handleProgressChange = event => {
 		this.video.currentTime = event.target.value
 	}
+	handleSeeking = event => {
+		this.setState({
+			loading: true
+		});
+	}
+	handleSeeked = event => {
+		this.setState({
+			loading: false
+		});
+	}
 	render() {
 		return (
 			<VideoPlayerLayout>
 				<Title
 					title="Este es un titulo chido!!"
-				/>
-				<Video
-					handleLoadedMetadata={this.handleLoadedMetadata}
-					handleTimeUpdate={this.handleTimeUpdate}
-					src="http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
-					autoplay={this.props.autoplay}
-					pause={this.state.pause}
 				/>
 				<Controls>
 					<PlayPause 
@@ -71,6 +76,18 @@ class VideoPlayer extends Component {
 						handleProgressChange={this.handleProgressChange}
 					/>
 				</Controls>
+				<Spinner 
+					active={this.state.loading}
+				/>
+				<Video
+					handleLoadedMetadata={this.handleLoadedMetadata}
+					handleTimeUpdate={this.handleTimeUpdate}
+					handleSeeking={this.handleSeeking}
+					handleSeeked={this.handleSeeked}
+					src="http://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4"
+					autoplay={this.props.autoplay}
+					pause={this.state.pause}
+				/>
 			</VideoPlayerLayout>
 		)
 	}
