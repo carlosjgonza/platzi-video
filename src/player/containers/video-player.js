@@ -5,13 +5,17 @@ import Title from '../components/title.js';
 import PlayPause from '../components/play-pause';
 import Timer from '../components/timer';
 import Controls from '../components/video-player-controls';
+import ProgressBar from '../components/progress-bar';
+
 import { formatTime } from '../../libs/utilities.js';
 
 class VideoPlayer extends Component {
 	state = {
 		pause: true,
 		duration: 0,
-		currentTime: 0
+		durationFormatted: 0,
+		currentTime: 0,
+		currentTimeFormatted: 0
 	}
 	togglePlay = (event) => {
 		this.setState({
@@ -26,13 +30,18 @@ class VideoPlayer extends Component {
 	handleLoadedMetadata = event => {
 		this.video = event.target;
 		this.setState({
-			duration: formatTime(this.video.duration),
+			durationFormatted: formatTime(this.video.duration),
+			duration: this.video.duration
 		});
 	}
 	handleTimeUpdate = event => {
 		this.setState({
-			currentTime: formatTime(this.video.currentTime)
+			currentTimeFormatted: formatTime(this.video.currentTime),
+			currentTime: this.video.currentTime
 		});
+	}
+	handleProgressChange = event => {
+		this.video.currentTime = event.target.value
 	}
 	render() {
 		return (
@@ -53,8 +62,13 @@ class VideoPlayer extends Component {
 						handleClick={this.togglePlay}
 					/>
 					<Timer
-						currentTime={this.state.currentTime}
+						currentTime={this.state.currentTimeFormatted}
+						duration={this.state.durationFormatted}
+					/>
+					<ProgressBar
 						duration={this.state.duration}
+						value={this.state.currentTime}
+						handleProgressChange={this.handleProgressChange}
 					/>
 				</Controls>
 			</VideoPlayerLayout>
